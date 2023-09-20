@@ -10,7 +10,7 @@ interface TaskProps {
    id: number;
    task: string;
    finished: boolean;
-   onRemove: (id:number) => void;
+   onRemove: (id:number, task: string) => void;
    onFinished: (id: number ) => void;
 }
 
@@ -38,9 +38,8 @@ export default function Task(
 
       <TouchableOpacity
          style={styles.trash}
-         onPress={() => onRemove(id)}
+         onPress={() => onRemove(id, task)}
       >
-
          <Image
             source={Trash}
             style={styles.img}

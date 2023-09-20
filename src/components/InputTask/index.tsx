@@ -11,6 +11,11 @@ export function InputTask( { handleCreateTask } :InputTaskProps) {
 
    const [ textTask , setTextTask ] = useState('')
 
+   function cleanInputAfterCreateTask(task:string){
+      handleCreateTask(task)
+      setTextTask('')
+   }
+
    return   (
       <View style={styles.container}>
          <TextInput 
@@ -23,7 +28,7 @@ export function InputTask( { handleCreateTask } :InputTaskProps) {
          />
          <TouchableOpacity
             style={styles.addBtn}
-            onPress={() => handleCreateTask(textTask)}
+            onPress={() => cleanInputAfterCreateTask(textTask)}
          >
            <Text style={styles.icon}>+</Text>
          </TouchableOpacity>

@@ -6,6 +6,7 @@ import { Counter } from "../../components/Counter";
 import Void from "../../components/Void";
 import Task from "../../components/Task";
 import { useState } from "react";
+import { Alert } from "react-native";
 
 interface TaskProps {
    id: number;
@@ -13,7 +14,7 @@ interface TaskProps {
    finished: boolean
 }
 
-export function Home(){
+export function Home() {
 
    const [ tasks, setTasks ] = useState<TaskProps[]>([])
 
@@ -33,18 +34,29 @@ export function Home(){
       }
    }
 
-   function handleDeleteTask( id: number) {
-      setTasks(() => tasks.filter(task => task.id !== id))
+   function handleDeleteTask( id: number , task : string) {
+      Alert.alert('Tem Certeza?',`Deseja mesmo excluir a tarefa ${task} `, [
+       {
+         text:'Sim',
+         onPress:() => setTasks(() => tasks.filter(task => task.id !== id))
+       },
+       {
+         text:'Cancelar',
+         style:"cancel"
+       }
+      ])
+
+      
    }
 
    function handleSetFinished (id:number){
-     const task : TaskProps | undefined = tasks.find(task => task.id === id);
+     const index = tasks.findIndex(task => task.id === id);
 
-     const oldTasks : TaskProps[] = tasks.filter(task => task.id !== id)
+     const updateList = tasks
 
-     if(task){
-      task.finished = !task.finished
-      setTasks([...oldTasks,task] )
+     if(index >= 0){
+      updateList[index].finished = !tasks[index].finished
+      setTasks([...updateList])
      }
    }
 
